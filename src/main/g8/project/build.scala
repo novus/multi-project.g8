@@ -23,7 +23,7 @@ object $name;format="Camel,word"$Build extends sbt.Build {
 object Shared {
     
   val testDeps = Seq(
-    "org.specs2" %% "specs2" % "1.12.4" % "test"
+    "org.specs2" %% "specs2" % "1.12.3" % "test"
   )
 
   val settings = Seq(
@@ -31,10 +31,11 @@ object Shared {
     version := "$version$",
     scalaVersion := "2.9.2",
     crossScalaVersions := Seq("2.9.1"),
-    resolvers += "Scala-Tools Maven2 Snapshots Repository" at "http://scala-tools.org/repo-snapshots",
+    resolvers ++= Seq("snapshots" at "http://oss.sonatype.org/content/repositories/snapshots",
+                      "releases"  at "http://oss.sonatype.org/content/repositories/releases"),
     initialCommands := "import $organization$.$name;format="lower,word"$._",
     shellPrompt := ShellPrompt.buildShellPrompt
-  )
+  ) ++ net.virtualvoid.sbt.graph.Plugin.graphSettings
   
 }
 
