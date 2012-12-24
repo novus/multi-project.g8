@@ -37,11 +37,22 @@ object Shared {
     scalacOptions := Seq("-deprecation", "-unchecked"),
     javacOptions ++= Seq("-source", "1.5", "-target", "1.5"),
     testOptions in Test += Tests.Argument("console", "junitxml"),
-    resolvers ++= Seq("snapshots" at "http://oss.sonatype.org/content/repositories/snapshots",
-                      "releases"  at "http://oss.sonatype.org/content/repositories/releases"),
+    resolvers ++= Seq("OSS Snapshots"         at "http://oss.sonatype.org/content/repositories/snapshots",
+                      "OSS Releases"          at "http://oss.sonatype.org/content/repositories/releases",
+                      "Novus Nexus Releases"  at "https://nexus.novus.local:65443/nexus/content/repositories/releases/",
+                      "Novus Nexus Snapshots" at "https://nexus.novus.local:65443/nexus/content/repositories/snapshots/",
+                      "Novus Nexus Public"    at "https://nexus.novus.local:65443/nexus/content/groups/public/"),
     initialCommands := "import $organization$.$name;format="lower,word"$._",
-    shellPrompt := ShellPrompt.buildShellPrompt
-  ) ++ net.virtualvoid.sbt.graph.Plugin.graphSettings
+    shellPrompt := ShellPrompt.buildShellPrompt,
+    publishTo <<= (version) { version: String =>
+      val sfx =
+        if (version.trim.endsWith("SNAPSHOT")) "snapshots"
+        else "releases"
+      val nexus = "https://nexus.novus.local:65443/nexus/content/repositories/"
+      Some("Novus " + sfx at nexus + sfx + "/")
+    },
+    credentials += Credentials(Path.userHome / ".ivy2" / ".novus_nexus")
+  ) ++ net.virtualvoid.sbt.graph.Plugin.graphSettings ++ Format.settings
   
 }
 
@@ -64,5 +75,36 @@ object ShellPrompt {
         currProject, currBranch /*, BuildSettings.buildVersion*/
       )
     }
+  }
+}
+
+object Format {
+
+  import com.typesafe.sbtscalariform.ScalariformPlugin
+  import ScalariformPlugin._
+
+  lazy val settings = scalariformSettings ++ Seq(
+    ScalariformKeys.preferences := formattingPreferences
+  )
+
+  lazy val formattingPreferences = {
+    import scalariform.formatter.preferences._
+    FormattingPreferences().
+      setPreference(AlignParameters, true).
+      setPreference(AlignSingleLineCaseStatements, true).
+      setPreference(CompactControlReadability, true).
+      setPreference(CompactStringConcatenation, false).
+      setPreference(DoubleIndentClassDeclaration, true).
+      setPreference(FormatXml, true).
+      setPreference(IndentLocalDefs, true).
+      setPreference(IndentPackageBlocks, true).
+      setPreference(IndentSpaces, 2).
+      setPreference(MultilineScaladocCommentsStartOnFirstLine, true).
+      setPreference(PreserveSpaceBeforeArguments, false).
+      setPreference(PreserveDanglingCloseParenthesis, false).
+      setPreference(RewriteArrowSymbols, false).
+      setPreference(SpaceBeforeColon, false).
+      setPreference(SpaceInsideBrackets, false).
+      setPreference(SpacesWithinPatternBinders, true)
   }
 }
