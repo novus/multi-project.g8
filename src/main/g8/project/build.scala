@@ -15,7 +15,7 @@ object $name;format="Camel,word"$Build extends sbt.Build {
   def project(id: String, base: File, settings: Seq[Project.Setting[_]] = Nil) =
     Project(id = id,
             base = base,
-            settings = Project.defaultSettings ++ Shared.settings ++ Seq(
+            settings = Project.defaultSettings ++ Shared.settings ++ settings ++ Seq(
               libraryDependencies ++= Shared.testDeps
             ))
 }
