@@ -1,6 +1,7 @@
 package $organization$.$name;format="lower,word"$
 
-import org.specs2.mutable._
+import org.scalatest.WordSpec
+import org.scalatest.matchers.ShouldMatchers
 
 class AppSpec extends WordSpec with ShouldMatchers {
 
