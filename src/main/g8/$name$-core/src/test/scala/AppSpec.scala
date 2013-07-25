@@ -15,4 +15,5 @@ class AppSpec extends WordSpec with ShouldMatchers {
       "Hello world" should endWith("world")
     }
   }
+  
 }
