@@ -1,7 +1,7 @@
 import sbt._
 import Keys._
 
-object $name;format="Camel,word"$Build extends sbt.Build {
+object Build extends sbt.Build {
 
   lazy val root =
     project(id = "$name;format="norm"$",
@@ -37,11 +37,7 @@ object Shared {
     scalacOptions := Seq("-deprecation", "-unchecked"),
     javacOptions ++= Seq("-source", "1.5", "-target", "1.5"),
     testOptions in Test += Tests.Argument("console", "junitxml"),
-    resolvers ++= Seq("OSS Snapshots"         at "http://oss.sonatype.org/content/repositories/snapshots",
-                      "OSS Releases"          at "http://oss.sonatype.org/content/repositories/releases",
-                      "Novus Nexus Releases"  at "https://nexus.novus.local:65443/nexus/content/repositories/releases/",
-                      "Novus Nexus Snapshots" at "https://nexus.novus.local:65443/nexus/content/repositories/snapshots/",
-                      "Novus Nexus Public"    at "https://nexus.novus.local:65443/nexus/content/groups/public/"),
+    resolvers ++= Seq("Novus Nexus Public" at "https://nexus.novus.com:65443/nexus/content/groups/public/"),
     initialCommands := "import $organization$.$name;format="lower,word"$._",
     shellPrompt := ShellPrompt.buildShellPrompt,
     publishTo <<= (version) { version: String =>
