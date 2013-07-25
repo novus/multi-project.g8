@@ -23,20 +23,15 @@ object Build extends sbt.Build {
 object Shared {
     
   val testDeps = Seq(
-    "org.specs2" %% "specs2" % "1.12.3" % "test",
-    "org.mockito" % "mockito-all" % "1.9.0" % "test",
-    "org.scalacheck" %% "scalacheck" % "1.9" % "test",
-    "junit" % "junit" % "4.7" % "test"
+    "org.scalatest" %% "scalatest" % "1.9.1" % "test"
   )
 
   val settings = Seq(
     organization := "$organization$",
     version := "$version$",
-    scalaVersion := "2.9.2",
-    crossScalaVersions := Seq("2.9.1"),
+    scalaVersion := "2.10.1",
+    crossScalaVersions := Seq("2.9.2"),
     scalacOptions := Seq("-deprecation", "-unchecked"),
-    javacOptions ++= Seq("-source", "1.5", "-target", "1.5"),
-    testOptions in Test += Tests.Argument("console", "junitxml"),
     resolvers ++= Seq("Novus Nexus Public" at "https://nexus.novus.com:65443/nexus/content/groups/public/"),
     initialCommands := "import $organization$.$name;format="lower,word"$._",
     shellPrompt := ShellPrompt.buildShellPrompt,
@@ -44,7 +39,7 @@ object Shared {
       val sfx =
         if (version.trim.endsWith("SNAPSHOT")) "snapshots"
         else "releases"
-      val nexus = "https://nexus.novus.local:65443/nexus/content/repositories/"
+      val nexus = "https://nexus.novus.com:65443/nexus/content/repositories/"
       Some("Novus " + sfx at nexus + sfx + "/")
     },
     credentials += Credentials(Path.userHome / ".ivy2" / ".novus_nexus")
