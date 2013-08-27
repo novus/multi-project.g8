@@ -1,5 +1,6 @@
 import sbt._
 import Keys._
+import sbtrelease.ReleasePlugin._
 
 object Build extends sbt.Build {
 
@@ -15,9 +16,14 @@ object Build extends sbt.Build {
   def project(id: String, base: File, settings: Seq[Project.Setting[_]] = Nil) =
     Project(id = id,
             base = base,
-            settings = Project.defaultSettings ++ Shared.settings ++ settings ++ Seq(
-              libraryDependencies ++= Shared.testDeps
-            ))
+            settings =
+              Project.defaultSettings ++
+              Shared.settings ++
+              releaseSettings ++
+              settings ++
+              Seq(
+                libraryDependencies ++= Shared.testDeps
+              ))
 }
 
 object Shared {
@@ -28,7 +34,6 @@ object Shared {
 
   val settings = Seq(
     organization := "$organization$",
-    version := "$version$",
     scalaVersion := "2.10.2",
     crossScalaVersions := Seq("2.9.2", "2.10.1", "2.10.2"),
     scalacOptions := Seq("-deprecation", "-unchecked"),
