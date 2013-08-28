@@ -23,13 +23,13 @@ object Build extends sbt.Build {
               settings ++
               Seq(
                 libraryDependencies ++= Shared.testDeps
-              ))
+              )).settings(Defaults.itSettings:_*).configs(IntegrationTest)
 }
 
 object Shared {
     
   val testDeps = Seq(
-    "org.scalatest" %% "scalatest" % "1.9.1" % "test"
+    "org.scalatest" %% "scalatest" % "1.9.1" % "it,test"
   )
 
   val settings = Seq(
