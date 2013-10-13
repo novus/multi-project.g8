@@ -29,13 +29,13 @@ object Build extends sbt.Build {
 object Shared {
     
   val testDeps = Seq(
-    "org.scalatest" %% "scalatest" % "1.9.1" % "it,test"
+    "org.scalatest" %% "scalatest" % "1.9.2" % "it,test"
   )
 
   val settings = Seq(
     organization := "$organization$",
-    scalaVersion := "2.10.2",
-    crossScalaVersions := Seq("2.9.2", "2.10.1", "2.10.2"),
+    scalaVersion := "2.10.3",
+    crossScalaVersions := Seq("2.9.3", "2.10.3"),
     scalacOptions := Seq("-deprecation", "-unchecked"),
     resolvers ++= Seq("Novus Nexus Public" at "https://nexus.novus.com:65443/nexus/content/groups/public/"),
     initialCommands := "import $organization$.$name;format="lower,word"$._",
