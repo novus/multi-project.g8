@@ -2,7 +2,7 @@ This is a [giter8](https://github.com/n8han/giter8) template for bootstrapping
 a new multi-module SBT project with a default Novus configuration.
 
 * SBT 0.12.3
-* Cross build against Scala 2.9.2, 2.10.1, 2.10.2
+* Cross build against Scala 2.9.3, 2.10.3
 * Aggregate project with a single "core" sub project
 * [Scala Test](http://www.scalatest.org/)
 * Project `name`, `organization` and `version` customizable as variables (Novus defaults)
