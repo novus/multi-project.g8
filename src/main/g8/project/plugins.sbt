@@ -1,4 +1,4 @@
-addSbtPlugin("com.typesafe.sbtscalariform" % "sbtscalariform" % "0.4.0")
+addSbtPlugin("com.typesafe.sbt" % "sbt-scalariform" % "1.2.1")
 
 addSbtPlugin("com.github.mpeltonen" % "sbt-idea" % "1.5.2")
 
